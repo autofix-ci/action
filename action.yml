@@ -1,0 +1,8 @@
+name: 'autofix.ci'
+description: 'Automatically fix formatting/lint issues in pull requests'
+branding:
+  icon: 'check-circle'
+  color: 'green'
+runs:
+  using: 'node16'
+  main: 'index.js'
