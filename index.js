@@ -67,6 +67,7 @@ async function run() {
         const filename = "autofix.json";
         try {
             await fs.promises.writeFile(filename, JSON.stringify({
+                version: 1,
                 changes: fileChanges,
                 failFast: core.getInput("fail-fast") === "true",
             }));
