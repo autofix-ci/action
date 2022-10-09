@@ -66,7 +66,10 @@ async function run() {
 
         const filename = "autofix.json";
         try {
-            await fs.promises.writeFile(filename, JSON.stringify(fileChanges));
+            await fs.promises.writeFile(filename, JSON.stringify({
+                changes: fileChanges,
+                failFast: core.getInput("fail-fast") === "true",
+            }));
             await client.uploadArtifact("autofix.ci", [filename], ".", {
                 continueOnError: false,
                 retentionDays: 1

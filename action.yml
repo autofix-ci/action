@@ -6,3 +6,8 @@ branding:
 runs:
   using: 'node16'
   main: 'index.js'
+inputs:
+  fail-fast:
+    description: 'Cancel all other workflows associated with a commit when fixing it.'
+    required: false
+    default: 'true'
