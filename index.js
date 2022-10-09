@@ -6,7 +6,7 @@ const fs = require("fs");
 
 async function run() {
     try {
-        if(process.env.GITHUB_WORKFLOW !== "autofix.ci") {
+        if (process.env.GITHUB_WORKFLOW !== "autofix.ci") {
             throw new Error(`For security reasons, the workflow in which the autofix.ci action is used must be named "autofix.ci".`);
         }
 
@@ -14,7 +14,7 @@ async function run() {
             await fs.promises.readFile(process.env.GITHUB_EVENT_PATH, {encoding: 'utf8'})
         );
 
-        if(core.isDebug()) {
+        if (core.isDebug()) {
             console.log(event);
         }
 
@@ -75,12 +75,17 @@ async function run() {
             await fs.promises.rm(filename, {maxRetries: 3});
         }
 
-        const url = (
+        let url = (
             "https://api.autofix.ci/fix" +
             "?owner=" + encodeURIComponent(event.repository.owner.login) +
-            "&repo=" + encodeURIComponent(event.repository.name) +
-            "&pull=" + encodeURIComponent(event.pull_request.number)
+            "&repo=" + encodeURIComponent(event.repository.name)
         )
+        if (event.pull_request) {
+            url += "&pull=" + encodeURIComponent(event.pull_request.number);
+        } else {
+            url += "&branch=" + encodeURIComponent(event.ref.replace(/^refs\/heads\//, ""));
+        }
+
         const http = new httpClient.HttpClient("autofix-action/v1");
         const resp = await http.post(url, null);
         const body = await resp.readBody();
