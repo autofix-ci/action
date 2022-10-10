@@ -13,7 +13,6 @@ async function run() {
         const event = JSON.parse(
             await fs.promises.readFile(process.env.GITHUB_EVENT_PATH, {encoding: 'utf8'})
         );
-
         if (core.isDebug()) {
             console.log(event);
         }
@@ -37,13 +36,17 @@ async function run() {
         }
 
         let changes = stdout.trim().split("\n");
+        // UX: Already check here if we have forbidden files.
+        // This is truly enforced on the server, but this way we can give a better error message.
+        if(changes.some((path) => path.includes(".github"))) {
+            throw new Error("The autofix.ci action is not allowed to modify the .github directory.");
+        }
         console.log(`Need to update ${changes.length} files.`);
 
         const fileChanges = {
             additions: [],
             deletions: []
         };
-
         await Promise.all(changes.map((async (filename) => {
             let buf;
             try {
@@ -57,7 +60,6 @@ async function run() {
                 contents: buf.toString("base64")
             });
         })));
-
         if (core.isDebug()) {
             console.log(fileChanges);
         }
@@ -94,13 +96,13 @@ async function run() {
         const resp = await http.post(url, null);
         const body = await resp.readBody();
         if (resp.message.statusCode === 200) {
-            core.setFailed("Need to update files.");
-            // show the user what needs to be changed.
-            await exec.exec("git", ["diff", "--staged"])
+            core.setFailed("✅ Autofix task started.");
         } else {
             console.log(resp.message.statusCode, body);
             core.setFailed(body);
         }
+        // show the user what needs to be changed.
+        await exec.exec("git", ["diff", "--staged"]);
     } catch (error) {
         core.setFailed(error.message);
     }
