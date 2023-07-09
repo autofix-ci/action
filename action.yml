@@ -11,3 +11,6 @@ inputs:
     description: 'Cancel all other workflows associated with a commit when fixing it.'
     required: false
     default: 'true'
+  commit-message:
+    description: 'The commit message to use when fixing a commit.'
+    required: false
