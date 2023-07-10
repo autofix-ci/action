@@ -17,7 +17,12 @@ async function run() {
             console.log(event);
         }
 
-        let ok = await exec.exec("git", ["add", "--all"]);
+        let ok = await exec.exec("git", ["reset"]);
+        if (ok !== 0) {
+            throw new Error("Failed to reset files.");
+        }
+
+        ok = await exec.exec("git", ["-c", "core.fileMode=false", "add", "--all"]);
         if (ok !== 0) {
             throw new Error("Failed to stage files.");
         }
