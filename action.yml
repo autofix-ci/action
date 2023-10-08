@@ -4,7 +4,7 @@ branding:
   icon: 'check-circle'
   color: 'green'
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'index.js'
 inputs:
   fail-fast:
@@ -14,3 +14,8 @@ inputs:
   commit-message:
     description: 'The commit message to use when fixing a commit.'
     required: false
+outputs:
+  autofix_started:
+    description: |
+      Boolean indicating whether changes have been sent to the autofix server
+      and a fix commit is coming up.

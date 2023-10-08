@@ -6,6 +6,8 @@ const fs = require("fs");
 
 async function run() {
     try {
+        core.setOutput('autofix_started', false);
+
         if (process.env.GITHUB_WORKFLOW !== "autofix.ci") {
             throw new Error(`For security reasons, the workflow in which the autofix.ci action is used must be named "autofix.ci".`);
         }
@@ -103,6 +105,7 @@ async function run() {
         const body = await resp.readBody();
         if (resp.message.statusCode === 200) {
             core.setFailed("✅ Autofix task started.");
+            core.setOutput('autofix_started', true);
         } else {
             console.log(resp.message.statusCode, body);
             core.setFailed(body);
