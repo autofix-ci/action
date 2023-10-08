@@ -79,6 +79,7 @@ async function run() {
                 version: 1,
                 changes: fileChanges,
                 failFast: core.getInput("fail-fast") === "true",
+                comment: core.getInput("comment") || undefined,
                 commitMessage: core.getInput("commit-message") || undefined,
             }));
             await client.uploadArtifact("autofix.ci", [filename], ".", {
