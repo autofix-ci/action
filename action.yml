@@ -14,7 +14,7 @@ inputs:
   commit-message:
     description: 'The commit message to use when fixing a commit.'
     required: false
-  commment:
+  comment:
     description: 'Add a custom comment to the PR when fixing a commit.'
     required: false
 outputs:
