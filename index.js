@@ -30,7 +30,7 @@ async function run() {
         }
 
         // Git consistently uses unix-style paths, so we do not need to worry about path conversions.
-        let {exitCode, stdout, stderr} = await exec.getExecOutput("git", ["diff", "--name-only", "--staged"])
+        let {exitCode, stdout, stderr} = await exec.getExecOutput("git", ["diff", "--name-only", "--staged", "--no-renames"])
         if (exitCode !== 0) {
             console.error(stdout);
             console.error(stderr);
