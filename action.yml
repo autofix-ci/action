@@ -5,7 +5,7 @@ branding:
   color: 'green'
 runs:
   using: 'node20'
-  main: 'index.js'
+  main: 'index.dist.js'
 inputs:
   fail-fast:
     description: 'Cancel all other workflows associated with a commit when fixing it.'

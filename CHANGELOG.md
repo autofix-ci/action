@@ -1,0 +1,1 @@
+See https://github.com/autofix-ci/action/releases.
