@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "esbuild index.ts --bundle --platform=node --target=node20 --minify --outfile=index.dist.js"
   },
   "keywords": [],
   "author": "Maximilian Hils",
@@ -14,5 +14,9 @@
     "@actions/core": "^1.10.1",
     "@actions/exec": "^1.1.1",
     "@actions/http-client": "^2.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.8",
+    "esbuild": "0.21.5"
   }
 }
