@@ -45,6 +45,7 @@ async function main() {
         await exec("git", ["config", "user.email", "noreply@autofix.ci"]);
         await exec("git", [
             "commit",
+            "--no-verify",
             "-m", "autofix",
         ]);
         let commit_hash = (
