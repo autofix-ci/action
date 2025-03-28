@@ -55,7 +55,7 @@ async function main() {
             await exec("git", ["show", commit_hash]);
         }
         // Fetch and check out PR head
-        await exec("git", ["fetch", "--depth=1", "origin", `+refs/pull/${event.pull_request.number}/head`]);
+        await exec("git", ["fetch", "--depth=1", "origin", event.pull_request.head.ref]);
         await exec("git", ["checkout", "--force", "FETCH_HEAD"]);
         if (isDebug()) {
             await exec("git", ["status"]);
