@@ -14,7 +14,7 @@ See [action.yml](./action.yml) for a list of all the available inputs and output
 You can pass inputs like this:
 
 ```yaml
-    - uses: autofix-ci/action@v1  # optionally replace with the latest commit hash
+    - uses: autofix-ci/action@v1  # optionally replace with the commit hash of the latest release
       with:
         fail-fast: false
 ```
