@@ -21,13 +21,18 @@ async function main() {
 
     await exec("git", ["reset"]);
 
-    // Prevent Git from escaping non-ASCII characters in file paths (e.g., Chinese) as octal sequences
-    await exec("git", ["config", "core.quotepath", "false"]);
-
     await exec("git", ["-c", "core.fileMode=false", "add", "--all"]);
 
     // Git consistently uses unix-style paths, so we do not need to worry about path conversions.
-    let {stdout} = await getExecOutput("git", ["diff", "--name-only", "--staged", "--no-renames"])
+    let {stdout} = await getExecOutput("git", [
+        // Prevent Git from escaping non-ASCII characters in file paths (e.g., Chinese) as octal sequences
+        "-c",
+        "core.quotepath=false",
+        "diff",
+        "--name-only",
+        "--staged",
+        "--no-renames",
+    ])
     if (stdout === "") {
         console.log("Nothing to do! ✨");
         return;
