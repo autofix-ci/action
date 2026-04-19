@@ -4,7 +4,7 @@ branding:
   icon: 'check-circle'
   color: 'green'
 runs:
-  using: 'node20'
+  using: 'node24'
   main: 'index.dist.js'
 inputs:
   fail-fast:
